@@ -96,10 +96,10 @@ if submitted:
     predicted_proba = model.predict_proba(model_input)[0]
     probability = predicted_proba[1] * 100
 
-    # 分层风险判断
-    y_probs = model.predict_proba(X_test)[:, 1]
-    low_threshold = np.percentile(y_probs, 50.0)
-    mid_threshold = np.percentile(y_probs, 88.07)
+    # ===== 风险等级判断（根据设定区间） =====
+    low_threshold = 0.1226
+    mid_threshold = 0.42
+
 
     if predicted_proba[1] <= low_threshold:
         risk_level = "🟢 **You are currently at a low risk of cardiovascular disease.**"
@@ -139,5 +139,6 @@ if submitted:
     plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
     plt.close()
     st.image("shap_force_plot.png", caption="SHAP Force Plot", use_column_width=True)
+
 
 
